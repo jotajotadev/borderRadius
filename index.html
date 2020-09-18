@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            color: teal;
+            text-align: center;
+        }
+        span {
+            display: block;
+            font-size: 1.3rem;
+        }
+        .wrap {
+            display: flex;
+            justify-content: center;
+        }
+        .wrap > * {
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+
+        }
+
+        .shape {
+            width: 200px;
+            height: 200px;
+            background-color:teal;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .showResult {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Awesome <span>Border Radius</span></h1>
+
+
+    <div class="wrap">
+        <button id="topLeft">top left</button>
+        <button id="topRight">top right</button>
+    </div>
+    
+    <div id="shape" class="shape">
+    </div>
+    
+    <div class="wrap">
+        <button id="bottomLeft">bottom left</button>
+        <button id="bottomRight">bottom right</button>
+    </div>
+
+    <p id="showProperties" class="showResult"></p>
+    <button id="copy" class="copy">Copy</button>
+
+    <button id="restart">Reiniciar valores</button>
+    
+
+
+    <script>
+        let buttonTopLeft = document.getElementById("topLeft");
+        let buttonTopRight = document.getElementById("topRight");
+        let buttonBottomLeft = document.getElementById("bottomLeft");
+        let buttonBottomRight = document.getElementById("bottomRight");
+        const showProperties = document.getElementById("showProperties");
+        const copyText = document.getElementById("copy");
+        const restart = document.getElementById("restart");
+        const shape = document.getElementById("shape");
+
+        const restartFunction = () => {
+            shape.style.borderRadius = 0;
+            valor = 0;
+            valor2 = 0;
+            valor3 = 0;
+            valor4 = 0;
+            nueva();
+        }
+
+        const nueva = () => {
+            let result = `border-radius: ${valor3}px ${valor4}px ${valor2}px ${valor}px;`;
+            showProperties.textContent = result;
+        }
+        const copyTextFunction = () => {
+            let selection = document.createRange(); // crea un rango de seleccion
+            selection.selectNodeContents(showProperties); // se añade a la seleccion en elemento
+            window.getSelection().removeAllRanges(); //elimina todas las selectiones
+            window.getSelection().addRange(selection)  //agregamos el elmento a seleccionar
+            let res = document.execCommand("copy") //copia el elemento seleccionado
+            if(res) {
+                window.getSelection().removeRange(selection) //elemina la seleccion sobre el elmento 
+            } else {
+                showProperties.textContent = "Primero aplica un valor para poder copiar"
+            }
+        }
+
+        copyText.addEventListener("click", copyTextFunction);
+        restart.addEventListener("click", restartFunction);
+        let valor = 0;
+        buttonBottomLeft.addEventListener("click", function(){
+            let aplicar;
+            aplicar = valor + "px";
+            shape.style.borderBottomLeftRadius = aplicar;
+            valor += 10;
+            nueva()
+        });
+
+        let valor2 = 0;
+        buttonBottomRight.addEventListener("click", function(){
+            let aplicar;
+            aplicar = valor2 + "px";
+            shape.style.borderBottomRightRadius = aplicar;
+            valor2 += 10;
+            nueva()
+        });
+        let valor3 = 0;
+        buttonTopLeft.addEventListener("click", function(){
+            let aplicar;
+            aplicar = valor3 + "px";
+            shape.style.borderTopLeftRadius = aplicar;
+            valor3 += 10;
+            nueva()
+        });
+        let valor4 = 0;
+        buttonTopRight.addEventListener("click", function(){
+            let aplicar;
+            aplicar = valor4 + "px";
+            shape.style.borderTopRightRadius = aplicar;
+            valor4 += 10;
+            nueva()
+        });
+
+        restartFunction();
+
+
+    </script>
+</body>
+</html>
